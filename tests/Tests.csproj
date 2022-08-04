@@ -23,6 +23,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\src\Lib.csproj" />
+    
+    <Content Include="data\**\*.*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
+
 
 </Project>

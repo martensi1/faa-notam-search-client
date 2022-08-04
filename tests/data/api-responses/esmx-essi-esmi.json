@@ -1,0 +1,119 @@
+{
+    "notamList": [
+        {
+            "facilityDesignator": "ESMX",
+            "notamNumber": "B2468/22",
+            "featureName": "International",
+            "issueDate": "07/26/2022 1308",
+            "startDate": "08/01/2022 0000",
+            "endDate": "08/07/2022 2359",
+            "source": "USNS",
+            "sourceType": "I",
+            "icaoMessage": "ESMX NOTAM MESSAGE 1",
+            "traditionalMessage": " ",
+            "plainLanguageMessage": " ",
+            "traditionalMessageFrom4thWord": "AERODROME CONTROL TOWER (TWR) HOURS OF SERVICE ARE NOW MON \n0400-0600 1230-1600, TUE 1200-1330, WED 0700-0900 1230-1415 \n1800-1930, THU 0400-1030 1130-1815, FRI 0400-0800 1230-1815, SAT \nCLSD, SUN 040...",
+            "icaoId": "ESMX",
+            "accountId": "921",
+            "airportName": "KRONOBERG",
+            "procedure": false,
+            "userID": 0,
+            "transactionID": 65045744,
+            "cancelledOrExpired": false,
+            "digitalTppLink": false,
+            "status": "Active",
+            "contractionsExpandedForPlainLanguage": false,
+            "keyword": "INTERNATIONAL",
+            "snowtam": false,
+            "geometry": "POINT(3732898.30217367 5678423.4230799)",
+            "digitallyTransformed": false,
+            "messageDisplayed": "concise",
+            "hasHistory": false,
+            "moreThan300Chars": false,
+            "showingFullText": false,
+            "locID": 331314,
+            "defaultIcao": false,
+            "crossoverTransactionID": 0,
+            "crossoverAccountID": "",
+            "mapPointer": "POINT(14.727994 56.929144)",
+            "requestID": 0
+        },
+        {
+            "facilityDesignator": "ESMX",
+            "notamNumber": "B2469/22",
+            "featureName": "International",
+            "issueDate": "07/26/2022 1310",
+            "startDate": "08/08/2022 0000",
+            "endDate": "08/14/2022 2359",
+            "source": "USNS",
+            "sourceType": "I",
+            "icaoMessage": "ESMX NOTAM MESSAGE 2",
+            "traditionalMessage": " ",
+            "plainLanguageMessage": " ",
+            "traditionalMessageFrom4thWord": "AERODROME CONTROL TOWER (TWR) HOURS OF SERVICE ARE NOW MON \n0400-0830 1230-1600, TUE 1200-1330, WED 0700-0900 1230-1415 \n1800-1930, THU 0400-0800 1430-1815, FRI 0400-0600 1230-1815, SAT \n0400-0630, SU...",
+            "icaoId": "ESMX",
+            "accountId": "921",
+            "airportName": "KRONOBERG",
+            "procedure": false,
+            "userID": 0,
+            "transactionID": 65045754,
+            "cancelledOrExpired": false,
+            "digitalTppLink": false,
+            "status": "Active",
+            "contractionsExpandedForPlainLanguage": false,
+            "keyword": "INTERNATIONAL",
+            "snowtam": false,
+            "geometry": "POINT(3732898.30217367 5678423.4230799)",
+            "digitallyTransformed": false,
+            "messageDisplayed": "concise",
+            "hasHistory": false,
+            "moreThan300Chars": false,
+            "showingFullText": false,
+            "locID": 331314,
+            "defaultIcao": false,
+            "crossoverTransactionID": 0,
+            "crossoverAccountID": "",
+            "mapPointer": "POINT(14.727994 56.929144)",
+            "requestID": 0
+        }
+    ],
+    "startRecordCount": 1,
+    "endRecordCount": 2,
+    "totalNotamCount": 2,
+    "filteredResultCount": 0,
+    "criteriaCaption": " Location search on location(s) ESSI, ESMX, ESMI",
+    "searchDateTime": "2022-08-04 18:33:07",
+    "linkedLocationCaption": "",
+    "error": "",
+    "countsByType": [
+        {
+            "name": "CONSTRUCTION",
+            "value": 0
+        },
+        {
+            "name": "RNAV",
+            "value": 0
+        },
+        {
+            "name": "GPS",
+            "value": 0
+        },
+        {
+            "name": "Ending this month",
+            "value": 2
+        },
+        {
+            "name": "LTA",
+            "value": 0
+        },
+        {
+            "name": "TFR",
+            "value": 0
+        },
+        {
+            "name": "CARF",
+            "value": 0
+        }
+    ],
+    "requestID": 0
+}

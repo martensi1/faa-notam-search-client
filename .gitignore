@@ -4,7 +4,9 @@
 .vs/*
 artifacts/
 packages/
-tests/TestResults/
+nupkgs/
+reports/
+.tools/
 *DS_Store
 *.sln.ide
 *.suo

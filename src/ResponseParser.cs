@@ -40,8 +40,8 @@ namespace PilotAppLib.Clients.NotamSearch
                 else
                 {
                     reports[airport] += 
-                        Environment.NewLine +
-                        Environment.NewLine;
+                        "\n" +
+                        "\n";
                 }
 
                 reports[airport] += item.Message;

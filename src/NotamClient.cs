@@ -55,6 +55,9 @@ namespace PilotAppLib.Clients.NotamSearch
             if (airports == null)
                 throw new ArgumentNullException(nameof(airports));
 
+            if (airports.Length == 0)
+                throw new ArgumentException("At least one airport must be specified", nameof(airports));
+
             return _apiClient.GetNotams(airports);
         }
     }

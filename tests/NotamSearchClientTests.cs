@@ -7,13 +7,13 @@ using Xunit;
 
 namespace PilotAppLib.Clients.NotamSearch.Tests
 {
-    public class NotamClientTests
+    public class NotamSearchClientTests
     {
         private readonly Mock<IApiClient> _apiMock;
         private readonly NotamSearchClient _client;
 
 
-        public NotamClientTests()
+        public NotamSearchClientTests()
         {
             _apiMock = new Mock<IApiClient>();
             _client = new NotamSearchClient(_apiMock.Object);

@@ -21,6 +21,7 @@ namespace PilotAppLib.Clients.NotamSearch
                 .Select(it => JsonSerializer.Deserialize<ResponseItem>(it.GetRawText()))
                 .ToList();
 
+            items.Sort();
             return IterateItems(items);
         }
 
@@ -44,7 +45,7 @@ namespace PilotAppLib.Clients.NotamSearch
                         "\n";
                 }
 
-                reports[airport] += item.Message;
+                reports[airport] += MessageProcessor.Process(item.Message);
             }
 
             return reports;

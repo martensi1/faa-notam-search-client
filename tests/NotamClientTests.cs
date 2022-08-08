@@ -10,20 +10,20 @@ namespace PilotAppLib.Clients.NotamSearch.Tests
     public class NotamClientTests
     {
         private readonly Mock<IApiClient> _apiMock;
-        private readonly NotamClient _client;
+        private readonly NotamSearchClient _client;
 
 
         public NotamClientTests()
         {
             _apiMock = new Mock<IApiClient>();
-            _client = new NotamClient(_apiMock.Object);
+            _client = new NotamSearchClient(_apiMock.Object);
         }
 
 
         [Fact]
         public void DefaultConstructor()
         {
-            new NotamClient();
+            new NotamSearchClient();
         }
 
         [Fact]

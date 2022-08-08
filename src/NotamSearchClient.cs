@@ -8,12 +8,12 @@ namespace PilotAppLib.Clients.NotamSearch
     /// <summary>
     /// Client for retrieving NOTAMs from FAA's NOTAM Search service
     /// </summary>
-    public class NotamClient : IDisposable
+    public class NotamSearchClient : IDisposable
     {
         private readonly IApiClient _apiClient;
 
-        /// <summary>Initializes a new instance of the <see cref="NotamClient" /> class</summary>
-        public NotamClient() : this(
+        /// <summary>Initializes a new instance of the <see cref="NotamSearchClient" /> class</summary>
+        public NotamSearchClient() : this(
             new ApiClient(
                 new EndpointBuilder(),
                 new HttpGateway(),
@@ -22,12 +22,12 @@ namespace PilotAppLib.Clients.NotamSearch
         {
         }
 
-        internal NotamClient(IApiClient apiClient)
+        internal NotamSearchClient(IApiClient apiClient)
         {
             _apiClient = apiClient;
         }
 
-        /// <summary>Releases the unmanaged resources and disposes of the managed resources used by <see cref="NotamClient" /></summary>
+        /// <summary>Releases the unmanaged resources and disposes of the managed resources used by <see cref="NotamSearchClient" /></summary>
         public void Dispose()
         {
             _apiClient.Dispose();

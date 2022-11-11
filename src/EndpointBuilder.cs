@@ -7,7 +7,7 @@ namespace PilotAppLib.Clients.NotamSearch
         public string BuildHttpEndpoint(string[] airports, uint offset);
     }
 
-    sealed class EndpointBuilder : IEndpointBuilder
+    class EndpointBuilder : IEndpointBuilder
     {
         private const string BaseUrl = "https://notams.aim.faa.gov/notamSearch/search";
 

@@ -8,7 +8,7 @@ namespace PilotAppLib.Clients.NotamSearch
         public NotamRecordBatch ParseJson(string json);
     }
 
-    sealed class ResponseParser : IResponseParser
+    class ResponseParser : IResponseParser
     {
         public NotamRecordBatch ParseJson(string json)
         {

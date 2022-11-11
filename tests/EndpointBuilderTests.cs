@@ -14,14 +14,14 @@ namespace PilotAppLib.Clients.NotamSearch.Tests
             _builder = new EndpointBuilder();
         }
 
-
+        
         [Theory]
-        [InlineData(new[] { "ESGJ" }, "searchType=0&designatorsForLocation=ESGJ")]
-        [InlineData(new[] { "ESGJ", "ESSA" }, "searchType=0&designatorsForLocation=ESGJ,ESSA")]
-        [InlineData(new[] { "ESGJ", "ESSA", "ESMX" }, "searchType=0&designatorsForLocation=ESGJ,ESSA,ESMX")]
-        public void BuildEndpoint(string[] airportIcaos, string expectedUrlArguments)
+        [InlineData(new[] { "ESGJ" }, 0, "searchType=0&designatorsForLocation=ESGJ&offset=0")]
+        [InlineData(new[] { "ESGJ", "ESSA" }, 1, "searchType=0&designatorsForLocation=ESGJ,ESSA&offset=1")]
+        [InlineData(new[] { "ESGJ", "ESSA", "ESMX" }, 2, "searchType=0&designatorsForLocation=ESGJ,ESSA,ESMX&offset=2")]
+        public void BuildEndpoint(string[] airportIcaos, uint offset, string expectedUrlArguments)
         {
-            string output = _builder.BuildHttpEndpoint(airportIcaos);
+            string output = _builder.BuildHttpEndpoint(airportIcaos, offset);
             Assert.Equal($"{ApiBaseUrl}?{expectedUrlArguments}", output);
         }
     }

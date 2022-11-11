@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.Json.Serialization;
 
 namespace PilotAppLib.Clients.NotamSearch
 {
-    [ExcludeFromCodeCoverage]
-    sealed class ResponseItem 
-        : IEquatable<ResponseItem>, IComparable<ResponseItem>
+    public sealed class NotamRecord 
+        : IEquatable<NotamRecord>, IComparable<NotamRecord>
     {
         [JsonPropertyName("facilityDesignator")]
         public string IcaoCode { get; set; }
@@ -29,13 +27,13 @@ namespace PilotAppLib.Clients.NotamSearch
             if (obj == null)
                 return false;
 
-            if (!(obj is ResponseItem other))
+            if (!(obj is NotamRecord other))
                 return false;
 
             return Equals(other);
         }
 
-        public bool Equals(ResponseItem other)
+        public bool Equals(NotamRecord other)
         {
             if (other == null) 
                 return false;
@@ -48,7 +46,7 @@ namespace PilotAppLib.Clients.NotamSearch
             return NotamNumber.GetHashCode();
         }
 
-        public int CompareTo(ResponseItem other)
+        public int CompareTo(NotamRecord other)
         {
             if (other == null)
             {
@@ -66,6 +64,17 @@ namespace PilotAppLib.Clients.NotamSearch
 
         private int CreateNumericValue()
         {
+            // Creates a comparable numeric number from the notam number. The most recent notam number
+            // should have the highest numeric value
+            //
+            // A notam number can look like this: "A1234/21"
+            // One letter to indicate the Series, a 4-digit NOTAM number followed by a stroke and two digits to indicate the year.
+            //
+            // Example of a correctly sorted notam numbers:
+            // 1. 'A0001/22'
+            // 2. 'B0001/21'
+            // 3. 'A0002/21'
+            // 4. 'A0001/21'
             string[] parts = NotamNumber.Split('/');
 
             if (parts.Length != 2)

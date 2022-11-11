@@ -5,11 +5,11 @@ namespace PilotAppLib.Clients.NotamSearch
 {
     interface IApiClient : IDisposable
     {
-        public IReadOnlyDictionary<string, string> GetNotams(string[] airports);
+        public IReadOnlyDictionary<string, List<NotamRecord>> GetNotams(string[] airports);
     }
 
 
-    class ApiClient : IApiClient
+    sealed class ApiClient : IApiClient
     {
         private readonly IEndpointBuilder _endpointBuilder;
         private readonly IHttpGateway _httpGateway;
@@ -33,12 +33,59 @@ namespace PilotAppLib.Clients.NotamSearch
         }
 
 
-        public IReadOnlyDictionary<string, string> GetNotams(string[] airports)
+        public IReadOnlyDictionary<string, List<NotamRecord>> GetNotams(string[] airportIcaos)
         {
-            string endpoint = _endpointBuilder.BuildHttpEndpoint(airports);
-            string text = _httpGateway.SendPost(endpoint);
+            NotamRecordBatch result = FetchAllNotams(airportIcaos);
+            result.SortAll();
 
-            return _responseParser.ParseJson(text);
+            return result.Records;
+        }
+
+        
+        private NotamRecordBatch FetchAllNotams(string[] airportIcaos)
+        {
+            NotamRecordBatch result = CreateStartBatch(airportIcaos);
+            uint nextOffset = 0;
+            
+            while (true)
+            {
+                NotamRecordBatch parseResult = FetchNextBatch(airportIcaos, nextOffset);
+                result.Append(parseResult);
+
+                if (parseResult.LastBatch)
+                {
+                    
+                    break;
+                }
+                else
+                {
+                    nextOffset = parseResult.EndCount;
+                    continue;
+                }
+            }
+
+            return result;
+        }
+
+        private NotamRecordBatch FetchNextBatch(string[] airportIcaos, uint offset)
+        {
+            string postEndpoint = _endpointBuilder.BuildHttpEndpoint(airportIcaos, offset);
+            string responseJson = _httpGateway.SendPost(postEndpoint);
+
+            NotamRecordBatch recordBatch = _responseParser.ParseJson(responseJson);
+            return recordBatch;
+        }
+
+        private NotamRecordBatch CreateStartBatch(string[] airportIcaos)
+        {
+            var startBatch = new NotamRecordBatch();
+
+            foreach (string airportIcao in airportIcaos)
+            {
+                startBatch.Records.Add(airportIcao, new List<NotamRecord>());
+            }
+
+            return startBatch;
         }
     }
 }

@@ -1,26 +1,26 @@
 ﻿using System;
-using System.Linq;
 
 namespace PilotAppLib.Clients.NotamSearch
 {
     interface IEndpointBuilder
     {
-        public string BuildHttpEndpoint(string[] airports);
+        public string BuildHttpEndpoint(string[] airports, uint offset);
     }
 
-    class EndpointBuilder : IEndpointBuilder
+    sealed class EndpointBuilder : IEndpointBuilder
     {
         private const string BaseUrl = "https://notams.aim.faa.gov/notamSearch/search";
 
 
-        public string BuildHttpEndpoint(string[] airports)
+        public string BuildHttpEndpoint(string[] airports, uint offset)
         {
             if (airports == null)
                 throw new ArgumentNullException(nameof(airports));
 
             return BaseUrl
                     + $"?searchType=0"
-                    + $"&designatorsForLocation={string.Join(",", airports)}";
+                    + $"&designatorsForLocation={string.Join(",", airports)}"
+                    + $"&offset={offset}";
         }
     }
 }

@@ -1,54 +1,69 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text.Json;
 
 namespace PilotAppLib.Clients.NotamSearch
 {
     interface IResponseParser
     {
-        public IReadOnlyDictionary<string, string> ParseJson(string json);
+        public NotamRecordBatch ParseJson(string json);
     }
 
-    class ResponseParser : IResponseParser
+    sealed class ResponseParser : IResponseParser
     {
-        public IReadOnlyDictionary<string, string> ParseJson(string json)
+        public NotamRecordBatch ParseJson(string json)
         {
-            JsonDocument document = JsonDocument.Parse(json);
-            JsonElement list = document.RootElement.GetProperty("notamList");
+            ResponseObject responseObject 
+                = JsonSerializer.Deserialize<ResponseObject>(json);
 
-            var items = list.EnumerateArray()
-                .Select(it => JsonSerializer.Deserialize<ResponseItem>(it.GetRawText()))
-                .ToList();
-
-            items.Sort();
-            return IterateItems(items);
+            return new NotamRecordBatch() {
+                StartCount = GetStartCount(responseObject),
+                EndCount = GetEndCount(responseObject),
+                LastBatch = GetIsLastBatch(responseObject),
+                Records = GetRecords(responseObject)
+            };
         }
 
 
-        private IReadOnlyDictionary<string, string> IterateItems(IReadOnlyList<ResponseItem> items)
+        private uint GetStartCount(ResponseObject responseObject)
         {
-            Dictionary<string, string> reports = new Dictionary<string, string>();
+            return responseObject.StartRecordCount;
+        }
 
-            foreach (ResponseItem item in items)
+        private uint GetEndCount(ResponseObject responseObject)
+        {
+            return responseObject.EndRecordCount;
+        }
+        private bool GetIsLastBatch(ResponseObject responseObject)
+        {
+            return (responseObject.EndRecordCount >= responseObject.TotalRecordCount);
+        }
+
+        private Dictionary<string, List<NotamRecord>> GetRecords(ResponseObject responseObject)
+        {
+            var records = responseObject.Records;
+            var result = new Dictionary<string, List<NotamRecord>>();
+
+            foreach (NotamRecord record in records)
             {
-                string airport = item.IcaoCode;
+                string icao = record.IcaoCode;
 
-                if (!reports.ContainsKey(airport))
+                if (!result.ContainsKey(icao))
                 {
-                    reports.Add(airport, string.Empty);
-                }
-                else
-                {
-                    reports[airport] += 
-                        "\n" +
-                        "\n";
+                    result.Add(icao, new List<NotamRecord>());
                 }
 
-                reports[airport] += MessageProcessor.Process(item.Message);
+                record.Message = StripControlCharacters(record.Message);
+                result[icao].Add(record);
             }
 
-            return reports;
+            return result;
+        }
+
+        private string StripControlCharacters(string data)
+        {
+            return data
+                .Replace("\n", string.Empty)
+                .Replace("\r", string.Empty);
         }
     }
 }

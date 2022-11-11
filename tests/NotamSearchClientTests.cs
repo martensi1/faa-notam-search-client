@@ -23,6 +23,7 @@ namespace PilotAppLib.Clients.NotamSearch.Tests
         [Fact]
         public void DefaultConstructor()
         {
+            // Act and assert
             new NotamSearchClient();
         }
 
@@ -40,49 +41,53 @@ namespace PilotAppLib.Clients.NotamSearch.Tests
         }
 
         [Theory]
-        [InlineData("ESGJ", "AERODROME OPERATION HOURS OF SERVICE CHANGE TO...")]
-        [InlineData("ESSI", "NIL")]
-        [InlineData("ESGG", "REF AIP AD 2 ESGG 2.20 LOCAL TRAFFIC REGULATIONS, PARA 7.1 C...")]
-        public void FetchNotam(string airportIcao, string airportNotam)
+        [InlineData("ESGJ")]
+        [InlineData("ESSI")]
+        [InlineData("ESGG")]
+        public void FetchNotam(string airportIcao)
         {
             // Arrange
-            var fetchResult = CreateNotamDictionary(new[] { airportIcao }, new[] { airportNotam });
-
-            _apiMock.Setup(p => p.GetNotams(
-                It.IsAny<string[]>()
-            )).Returns(fetchResult);
-
-            // Act
-            string result = _client.FetchNotam(airportIcao);
-
-            // Assert
-            Assert.Equal(airportNotam, result);
-            _apiMock.Verify(p => p.GetNotams(new[] { airportIcao }), Times.Once);
-        }
-
-        [Theory]
-        [InlineData(new[] { "ESGJ", "ESSA" }, new[] { "NIL", "REF AIP AD 2 ESGG 2.20 LOCAL TRAFFIC REGULATIONS, PARA 7.1 C..." })]
-        [InlineData(new[] { "ESGJ" }, new[] { "AERODROME OPERATION HOURS OF SERVICE CHANGE TO..." })]
-        public void FetchNotams(string[] airportIcaos, string[] airportNotams)
-        {
-            // Arrange
-            var notamData = CreateNotamDictionary(airportIcaos, airportNotams);
+            var notamData = new Dictionary<string, List<NotamRecord>>() {
+                { airportIcao, new List<NotamRecord>() }
+            };
 
             _apiMock.Setup(p => p.GetNotams(
                 It.IsAny<string[]>()
             )).Returns(notamData);
-
+            
             // Act
-            IReadOnlyDictionary<string, string> result = _client.FetchNotam(airportIcaos);
+            List<NotamRecord> result = _client.FetchNotam(airportIcao);
 
             // Assert
-            Assert.Equal(notamData, result);
+            Assert.Same(notamData[airportIcao], result);
+            _apiMock.Verify(p => p.GetNotams(new[] { airportIcao }), Times.Once);
+        }
+
+        [Theory]
+        [InlineData(new[] { "ESGJ", "ESSA" }, 0)]
+        [InlineData(new[] { "ESGJ" }, 0)]
+        public void FetchNotams(string[] airportIcaos, int _)
+        {
+            // Arrange
+            var notamData = new Dictionary<string, List<NotamRecord>>();
+
+
+            _apiMock.Setup(p => p.GetNotams(
+                It.IsAny<string[]>()
+            )).Returns(notamData);
+            
+            // Act
+            var result = _client.FetchNotam(airportIcaos);
+
+            // Assert
+            Assert.Same(notamData, result);
             _apiMock.Verify(p => p.GetNotams(airportIcaos), Times.Once);
         }
 
         [Fact]
         public void FetchNotamArgumentNull()
         {
+            // Act and assert
             var ex = Assert.Throws<ArgumentNullException>(() => _client.FetchNotam((string?)null));
             Assert.Equal("airport", ex.ParamName);
         }
@@ -90,6 +95,7 @@ namespace PilotAppLib.Clients.NotamSearch.Tests
         [Fact]
         public void FetchNotamsArgumentNull()
         {
+            // Act and assert
             var ex = Assert.Throws<ArgumentNullException>(() => _client.FetchNotam((string[]?)null));
             Assert.Equal("airports", ex.ParamName);
         }
@@ -97,25 +103,9 @@ namespace PilotAppLib.Clients.NotamSearch.Tests
         [Fact]
         public void FetchNotamsLengthZero()
         {
+            // Act and assert
             var ex = Assert.Throws<ArgumentException>(() => _client.FetchNotam(new string[0]));
             Assert.Equal("airports", ex.ParamName);
-        }
-
-
-        private IReadOnlyDictionary<string, string> CreateNotamDictionary(string[] airportIcaos, string[] airportNotams)
-        {
-            if (airportIcaos.Length != airportNotams.Length)
-                throw new ArgumentException("Array lengths does not match");
-
-
-            var result = new Dictionary<string, string>();
-
-            for (int i = 0; i < airportIcaos.Length; i++)
-            {
-                result.Add(airportIcaos[i], airportNotams[i]);
-            }
-
-            return result;
         }
     }
 }

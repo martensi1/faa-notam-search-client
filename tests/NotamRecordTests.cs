@@ -5,7 +5,7 @@ using Xunit;
 
 namespace PilotAppLib.Clients.NotamSearch.Tests
 {
-    public class ResponseItemTests
+    public class NotamRecordTests
     {
         [Theory]
         [InlineData("A1234/22", "A1235/21", -1)]
@@ -26,14 +26,14 @@ namespace PilotAppLib.Clients.NotamSearch.Tests
         [Fact]
         public void Sorting()
         {
-            var listOfItems = new List<ResponseItem>() {
+            var listOfItems = new List<NotamRecord>() {
                 CreateReponseItem("A1234/22"),
                 CreateReponseItem("B1234/22"),
                 CreateReponseItem("A1235/21"),
                 CreateReponseItem("A1236/22"),
             };
 
-            var expectedSortedList = new List<ResponseItem>() {
+            var expectedSortedList = new List<NotamRecord>() {
                 CreateReponseItem("B1234/22"),
                 CreateReponseItem("A1236/22"),
                 CreateReponseItem("A1234/22"),
@@ -45,9 +45,9 @@ namespace PilotAppLib.Clients.NotamSearch.Tests
         }
 
 
-        private ResponseItem CreateReponseItem(string notamNumber)
+        private NotamRecord CreateReponseItem(string notamNumber)
         {
-            return new ResponseItem {
+            return new NotamRecord {
                 NotamNumber = notamNumber
             };
         }

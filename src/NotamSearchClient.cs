@@ -8,7 +8,7 @@ namespace PilotAppLib.Clients.NotamSearch
     /// <summary>
     /// Client for retrieving NOTAMs from FAA's NOTAM Search service
     /// </summary>
-    public class NotamSearchClient : IDisposable
+    public sealed class NotamSearchClient : IDisposable
     {
         private readonly IApiClient _apiClient;
 
@@ -35,22 +35,22 @@ namespace PilotAppLib.Clients.NotamSearch
 
         /// <summary>Retrieves the latest NOTAM for the specified airport</summary>
         /// <param name="airport">Airport to get NOTAM from (ICAO)</param>
-        /// <returns>Airport NOTAM</returns>
+        /// <returns>Airport NOTAMs</returns>
         /// <exception cref="HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout</exception>
-        public string FetchNotam(string airport)
+        public List<NotamRecord> FetchNotam(string airport)
         {
             if (airport == null)
                 throw new ArgumentNullException(nameof(airport));
 
-            return _apiClient.GetNotams(new string[] { airport })
-                .Values.First();
+            var notams = _apiClient.GetNotams(new string[] { airport });
+            return notams[airport];
         }
 
         /// <summary>Retrieves the latest NOTAM for the specified list of airports</summary>
         /// <param name="airports">Airports to get NOTAM from (ICAO)</param>
-        /// <returns>Airport NOTAMs as a dictionary (icao, notam)</returns>
+        /// <returns>Airport NOTAMs as a dictionary (icao, notams)</returns>
         /// <exception cref="HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout</exception>
-        public IReadOnlyDictionary<string, string> FetchNotam(string[] airports)
+        public IReadOnlyDictionary<string, List<NotamRecord>> FetchNotam(string[] airports)
         {
             if (airports == null)
                 throw new ArgumentNullException(nameof(airports));

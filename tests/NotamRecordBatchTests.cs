@@ -51,51 +51,63 @@ namespace PilotAppLib.Clients.NotamSearch.Tests
             Assert.Equal(secondLastCount, first.EndCount);
         }
         
-        /*
-        [Theory]
-        [InlineData(0, 1, 1, 2)]
-        [InlineData(0, 2, 2, 4)]
-        [InlineData(8, 16, 16, 24)]
-        [InlineData(0, 30, 30, 60)]
-        public void AppendCheckRecords(
-            uint fistStartCount, uint firstNextOffset,
-            uint secondOffset, uint secondNextOffset
-            )
+        [Fact]
+        public void AppendCheckRecords()
         {
             // Arrange
             var first = new NotamRecordBatch() {
-                StartCount = 0,
+                StartCount = 1,
                 EndCount = 2,
                 Records = new Dictionary<string, List<NotamRecord>>() {
                     { 
                         "ESGJ",
                         new List<NotamRecord>() {
-                            CreateRecord("ESGJ", "A0001/22", "NOTAM MESSAGE"),
-                            CreateRecord("ESGJ", "A0001/22", "NOTAM MESSAGE"),
+                            new NotamRecord("ESGJ", "A0001/22", "NOTAM MESSAGE"),
+                            new NotamRecord("ESGJ", "A0002/22", "NOTAM MESSAGE"),
                         }
                     },
-                     {
+                    {
                         "ESSA",
                         new List<NotamRecord>() {
-                            
+                            new NotamRecord("ESSA", "B0001/22", "NOTAM MESSAGE"),
                         }
                     }
                 }
             };
 
             var second = new NotamRecordBatch() {
-                StartCount = 2,
+                StartCount = 3,
                 EndCount = 4,
-                Records = new Dictionary<string, List<NotamRecord>>()
+                Records = new Dictionary<string, List<NotamRecord>>() {
+                     {
+                        "ESSA",
+                        new List<NotamRecord>() {
+                            new NotamRecord("ESSA", "B0001/22", "NOTAM MESSAGE"),
+                        }
+                     },
+                     {
+                         "ESMX",
+                         new List<NotamRecord>() {
+                             new NotamRecord("ESMX", "C0001/22", "NOTAM MESSAGE"),
+                             new NotamRecord("ESMX", "C0002/22", "NOTAM MESSAGE"),
+                             new NotamRecord("ESMX", "C0003/22", "NOTAM MESSAGE")
+                         }
+                     }
+                }
             };
 
             // Act
             first.Append(second);
 
             // Assert
-            //Assert.Equal(firstOffset, first.Offset);
-            //Assert.Equal(secondNextOffset, first.NextOffset);
-        }*/
+            Assert.True(first.Records.ContainsKey("ESGJ"));
+            Assert.True(first.Records.ContainsKey("ESSA"));
+            Assert.True(first.Records.ContainsKey("ESMX"));
+
+            Assert.Equal(2, first.Records["ESGJ"].Count);
+            Assert.Equal(2, first.Records["ESSA"].Count);
+            Assert.Equal(3, first.Records["ESMX"].Count);
+        }
 
         [Theory]
         [InlineData(2, 2)]
@@ -116,16 +128,6 @@ namespace PilotAppLib.Clients.NotamSearch.Tests
             // Act and assert
             var ex = Assert.Throws<ArgumentException>(() => first.Append(second));
             Assert.Equal("other", ex.ParamName);
-        }
-
-        
-        private NotamRecord CreateRecord(string icao, string notamNumber, string message)
-        {
-            return new NotamRecord() {
-                IcaoCode = icao,
-                NotamNumber = notamNumber,
-                Message = message
-            };
         }
     }
 }

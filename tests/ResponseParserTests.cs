@@ -18,14 +18,14 @@ namespace PilotAppLib.Clients.NotamSearch.Tests
                             {
                                 "ESSA",
                                 new List<NotamRecord>() { 
-                                    new NotamRecord() { IcaoCode = "ESSA", Message = "ESSA NOTAM MESSAGE 2", NotamNumber= "A0575/22" },
-                                    new NotamRecord() { IcaoCode = "ESSA", Message = "ESSA NOTAM MESSAGE 1", NotamNumber= "A0668/22" }
+                                    new NotamRecord("ESSA", "A0575/22", "ESSA NOTAM MESSAGE 2"),
+                                    new NotamRecord("ESSA", "A0668/22", "ESSA NOTAM MESSAGE 1")
                                 }
                             },
                             { 
                                 "ESGJ",
-                                new List<NotamRecord>() { 
-                                    new NotamRecord() { IcaoCode = "ESGJ", Message = "ESGJ NOTAM MESSAGE 1", NotamNumber= "B2547/22" }
+                                new List<NotamRecord>() {
+                                    new NotamRecord("ESGJ", "B2547/22", "ESGJ NOTAM MESSAGE 1")
                                 }
                             }
                         }
@@ -41,8 +41,8 @@ namespace PilotAppLib.Clients.NotamSearch.Tests
                             {
                                 "ESMX",
                                 new List<NotamRecord>() {
-                                    new NotamRecord() { IcaoCode = "ESMX", Message = "ESMX NOTAM MESSAGE 2", NotamNumber= "B2468/22" },
-                                    new NotamRecord() { IcaoCode = "ESMX", Message = "ESMX NOTAM MESSAGE 1", NotamNumber= "B2469/22" }
+                                    new NotamRecord("ESMX", "B2468/22", "ESMX NOTAM MESSAGE 2"),
+                                    new NotamRecord("ESMX", "B2469/22", "ESMX NOTAM MESSAGE 1")
                                 }
                             }
                         }
@@ -58,8 +58,8 @@ namespace PilotAppLib.Clients.NotamSearch.Tests
                             {
                                 "ESMX",
                                 new List<NotamRecord>() {
-                                    new NotamRecord() { IcaoCode = "ESMX", Message = "ESMX NOTAM MESSAGE 4", NotamNumber= "B2478/22" },
-                                    new NotamRecord() { IcaoCode = "ESMX", Message = "ESMX NOTAM MESSAGE 3", NotamNumber= "B2476/22" }
+                                    new NotamRecord("ESMX", "B2478/22", "ESMX NOTAM MESSAGE 4"),
+                                    new NotamRecord("ESMX", "B2476/22", "ESMX NOTAM MESSAGE 3")
                                 }
                             }
                         }

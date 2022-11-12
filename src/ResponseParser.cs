@@ -40,20 +40,24 @@ namespace PilotAppLib.Clients.NotamSearch
 
         private Dictionary<string, List<NotamRecord>> GetRecords(ResponseObject responseObject)
         {
-            var records = responseObject.Records;
+            var notamObjects = responseObject.Objects;
             var result = new Dictionary<string, List<NotamRecord>>();
 
-            foreach (NotamRecord record in records)
+            foreach (var notamObject in notamObjects)
             {
-                string icao = record.IcaoCode;
-
+                string icao = notamObject.IcaoCode;
                 if (!result.ContainsKey(icao))
                 {
                     result.Add(icao, new List<NotamRecord>());
                 }
 
-                record.Message = StripControlCharacters(record.Message);
-                result[icao].Add(record);
+                notamObject.Message = StripControlCharacters(notamObject.Message);
+
+                result[icao].Add(new NotamRecord(
+                    notamObject.IcaoCode,
+                    notamObject.NotamNumber,
+                    notamObject.Message
+                    ));
             }
 
             return result;

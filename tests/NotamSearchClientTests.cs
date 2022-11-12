@@ -66,6 +66,7 @@ namespace PilotAppLib.Clients.NotamSearch.Tests
         [Theory]
         [InlineData(new[] { "ESGJ", "ESSA" }, 0)]
         [InlineData(new[] { "ESGJ" }, 0)]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "xUnit1026:Theory methods should use all of their parameters", Justification = "Bug, does not compile with only string array as argument")]
         public void FetchNotams(string[] airportIcaos, int _)
         {
             // Arrange

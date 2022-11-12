@@ -16,7 +16,20 @@ namespace PilotAppLib.Clients.NotamSearch
         [JsonPropertyName("totalNotamCount")]
         public uint TotalRecordCount { get; set; }
 
+
+        public sealed class NotamObject
+        {
+            [JsonPropertyName("facilityDesignator")]
+            public string IcaoCode { get; set; }
+
+            [JsonPropertyName("notamNumber")]
+            public string NotamNumber { get; set; }
+
+            [JsonPropertyName("icaoMessage")]
+            public string Message { get; set; }
+        }
+
         [JsonPropertyName("notamList")]
-        public List<NotamRecord> Records { get; set; }
+        public List<NotamObject> Objects { get; set; }
     }
 }

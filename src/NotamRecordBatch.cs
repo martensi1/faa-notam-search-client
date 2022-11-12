@@ -26,7 +26,7 @@ namespace PilotAppLib.Clients.NotamSearch
         {
             if (other.StartCount != (EndCount + 1))
             {
-                throw new ArgumentException("Start/end count mismatch, parse result not in sequence", nameof(other));
+                throw new ArgumentException("Start/end count mismatch, batches not in sequence", nameof(other));
             }
 
             EndCount = other.EndCount;

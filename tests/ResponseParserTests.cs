@@ -107,12 +107,12 @@ namespace PilotAppLib.Clients.NotamSearch.Tests
 
                 for (int i = 0; i < expectedNotamList.Count; i++)
                 {
-                    NotamRecord expectedItem = expectedNotamList[i];
-                    NotamRecord actualItem = actualNotamList[i];
+                    NotamRecord expectedRecord = expectedNotamList[i];
+                    NotamRecord actualRecord = actualNotamList[i];
 
-                    Assert.Equal(expectedItem.IcaoCode, actualItem.IcaoCode);
-                    Assert.Equal(expectedItem.Message, actualItem.Message);
-                    Assert.Equal(expectedItem.NotamNumber, actualItem.NotamNumber);
+                    Assert.Equal(expectedRecord.IcaoCode, actualRecord.IcaoCode);
+                    Assert.Equal(expectedRecord.Message, actualRecord.Message);
+                    Assert.Equal(expectedRecord.NotamNumber, actualRecord.NotamNumber);
                 }
             }
         }

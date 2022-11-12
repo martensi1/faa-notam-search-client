@@ -44,7 +44,7 @@ namespace PilotAppLib.Clients.NotamSearch.Tests
         [InlineData("ESGJ")]
         [InlineData("ESSI")]
         [InlineData("ESGG")]
-        public void FetchNotam(string airportIcao)
+        public void FetchNotams1(string airportIcao)
         {
             // Arrange
             var notamData = new Dictionary<string, List<NotamRecord>>() {
@@ -56,7 +56,7 @@ namespace PilotAppLib.Clients.NotamSearch.Tests
             )).Returns(notamData);
             
             // Act
-            List<NotamRecord> result = _client.FetchNotam(airportIcao);
+            List<NotamRecord> result = _client.FetchNotams(airportIcao);
 
             // Assert
             Assert.Same(notamData[airportIcao], result);
@@ -67,7 +67,7 @@ namespace PilotAppLib.Clients.NotamSearch.Tests
         [InlineData(new[] { "ESGJ", "ESSA" }, 0)]
         [InlineData(new[] { "ESGJ" }, 0)]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "xUnit1026:Theory methods should use all of their parameters", Justification = "Bug, does not compile with only string array as argument")]
-        public void FetchNotams(string[] airportIcaos, int _)
+        public void FetchNotams2(string[] airportIcaos, int _)
         {
             // Arrange
             var notamData = new Dictionary<string, List<NotamRecord>>();
@@ -78,7 +78,7 @@ namespace PilotAppLib.Clients.NotamSearch.Tests
             )).Returns(notamData);
             
             // Act
-            var result = _client.FetchNotam(airportIcaos);
+            var result = _client.FetchNotams(airportIcaos);
 
             // Assert
             Assert.Same(notamData, result);
@@ -86,18 +86,18 @@ namespace PilotAppLib.Clients.NotamSearch.Tests
         }
 
         [Fact]
-        public void FetchNotamArgumentNull()
+        public void FetchNotams1ArgumentNull()
         {
             // Act and assert
-            var ex = Assert.Throws<ArgumentNullException>(() => _client.FetchNotam((string?)null));
+            var ex = Assert.Throws<ArgumentNullException>(() => _client.FetchNotams((string?)null));
             Assert.Equal("airport", ex.ParamName);
         }
 
         [Fact]
-        public void FetchNotamsArgumentNull()
+        public void FetchNotams2ArgumentNull()
         {
             // Act and assert
-            var ex = Assert.Throws<ArgumentNullException>(() => _client.FetchNotam((string[]?)null));
+            var ex = Assert.Throws<ArgumentNullException>(() => _client.FetchNotams((string[]?)null));
             Assert.Equal("airports", ex.ParamName);
         }
 
@@ -105,7 +105,7 @@ namespace PilotAppLib.Clients.NotamSearch.Tests
         public void FetchNotamsLengthZero()
         {
             // Act and assert
-            var ex = Assert.Throws<ArgumentException>(() => _client.FetchNotam(new string[0]));
+            var ex = Assert.Throws<ArgumentException>(() => _client.FetchNotams(new string[0]));
             Assert.Equal("airports", ex.ParamName);
         }
     }

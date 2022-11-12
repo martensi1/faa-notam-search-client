@@ -33,15 +33,15 @@ namespace PilotAppLib.Clients.NotamSearch
             _apiClient.Dispose();
         }
 
-        /// <summary>Retrieves the latest NOTAM for the specified airport</summary>
+        /// <summary>Retrieves the latest NOTAMs for the specified airport</summary>
         /// <param name="airport">Airport to get NOTAM from (ICAO)</param>
         /// <returns>Airport NOTAMs</returns>
         /// <exception cref="HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout</exception>
-        public List<NotamRecord> FetchNotam(string airport)
+        public List<NotamRecord> FetchNotams(string airport)
         {
             if (airport == null)
                 throw new ArgumentNullException(nameof(airport));
-
+            
             var notams = _apiClient.GetNotams(new string[] { airport });
             return notams[airport];
         }
@@ -50,7 +50,7 @@ namespace PilotAppLib.Clients.NotamSearch
         /// <param name="airports">Airports to get NOTAM from (ICAO)</param>
         /// <returns>Airport NOTAMs as a dictionary (icao, notams)</returns>
         /// <exception cref="HttpRequestException">The request failed due to an underlying issue such as network connectivity, DNS failure, server certificate validation or timeout</exception>
-        public IReadOnlyDictionary<string, List<NotamRecord>> FetchNotam(string[] airports)
+        public IReadOnlyDictionary<string, List<NotamRecord>> FetchNotams(string[] airports)
         {
             if (airports == null)
                 throw new ArgumentNullException(nameof(airports));

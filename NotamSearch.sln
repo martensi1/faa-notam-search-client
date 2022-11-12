@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lib", "src\Lib.csproj", "{1
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "tests\Tests.csproj", "{1236D910-65A0-4B5C-A48B-556F7E1F1058}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sandbox", "sandbox\Sandbox.csproj", "{5277BA20-65EC-4689-83CC-7D72139D2812}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{1236D910-65A0-4B5C-A48B-556F7E1F1058}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1236D910-65A0-4B5C-A48B-556F7E1F1058}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1236D910-65A0-4B5C-A48B-556F7E1F1058}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5277BA20-65EC-4689-83CC-7D72139D2812}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5277BA20-65EC-4689-83CC-7D72139D2812}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5277BA20-65EC-4689-83CC-7D72139D2812}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5277BA20-65EC-4689-83CC-7D72139D2812}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -11,8 +11,13 @@ https://notams.aim.faa.gov/notamSearch/nsapp.html
 
 ## Example
 ```csharp
-string notam = NotamClient.FetchNotam("ESSA");
-Console.WriteLine(notam);
+List<NotamRecord> notams = NotamClient.FetchNotams("ESSA");
+
+Console.WriteLine("===ESSA NOTAMs===");
+foreach (var notam in notams)
+{
+    Console.WriteLine(notam.Message);
+}
 ```
 
 ## Installation
